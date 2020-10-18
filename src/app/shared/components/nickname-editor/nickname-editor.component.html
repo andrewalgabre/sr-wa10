@@ -1,1 +1,34 @@
-<p>nickname-editor works!</p>
+<div>
+  <form [formGroup]="nickNameFormList">
+    <ng-container *ngIf="nickNameFormList">
+      <mat-form-field
+        *ngFor="let control of nickNameFormList.controls; index as i"
+        class="example-full-width"
+      >
+        <input
+          [formControl]="nickNameFormList.controls[i]"
+          matInput
+          placeholder="Nickname {{ i + 1 }}"
+        />
+        <!-- <mat-error> Please enter a valid email address </mat-error>
+      <mat-error> Email is <strong>required</strong> </mat-error> -->
+      </mat-form-field>
+    </ng-container>
+  </form>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Enter new nickname</mat-label>
+    <input
+      [formControl]="nickNameAddFormControl"
+      matInput
+      placeholder="Ex. pat@example.com"
+    />
+    <!-- <mat-error> Please enter a valid email address </mat-error>
+      <mat-error> Email is <strong>required</strong> </mat-error> -->
+  </mat-form-field>
+
+  <br />
+  <button (click)="onNicknameAdd()" mat-raised-button color="primary">
+    Primary
+  </button>
+</div>
