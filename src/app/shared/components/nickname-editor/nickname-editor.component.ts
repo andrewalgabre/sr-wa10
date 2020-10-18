@@ -26,7 +26,9 @@ import { ValidatorService } from '../../services/validator.service';
 })
 export class NicknameEditorComponent implements OnInit, OnDestroy {
   @Input() set nicknames(nicknnameList: string[]) {
-    if (!nicknnameList) return;
+    if (!nicknnameList) {
+      return;
+    }
     (this.nicknameFormList.get('nicknames') as FormArray).clear();
     nicknnameList.map((nickname) =>
       (this.nicknameFormList.get('nicknames') as FormArray).push(
@@ -76,17 +78,19 @@ export class NicknameEditorComponent implements OnInit, OnDestroy {
     });
   }
 
-  onNicknameAdd() {
-    if (!this.nickNameAddFormControl.valid) return;
+  onNicknameAdd(): void {
+    if (!this.nickNameAddFormControl.valid) {
+      return;
+    }
     this.add.next(this.nickNameAddFormControl.value);
     this.nickNameAddFormControl.reset();
   }
 
-  onNicknameDelete(index: number) {
+  onNicknameDelete(index: number): void {
     this.delete.next(index);
   }
 
-  onNicknameChange(index: number, nickname: string) {
+  onNicknameChange(index: number, nickname: string): void {
     this.nicknameChange.next({ index, nickname });
   }
 
