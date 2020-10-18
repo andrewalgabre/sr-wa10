@@ -13,6 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
+import { NicknameValidator } from 'src/app/core/validators/nickname.validator';
 import { ValidatorService } from '../../services/validator.service';
 
 @Component({
@@ -39,7 +40,8 @@ export class NicknameEditorComponent implements OnInit, OnDestroy {
     this.nickNameFormList = this.formBuilder.array([]);
     this.nickNameAddFormControl = this.formBuilder.control(
       '',
-      Validators.required
+      [Validators.required],
+      [NicknameValidator.createValidator(this.validatorService)]
     );
   }
 
@@ -57,7 +59,11 @@ export class NicknameEditorComponent implements OnInit, OnDestroy {
   onNicknameAdd() {
     if (!this.nickNameAddFormControl.valid) return;
     this.nickNameFormList.controls.push(
-      new FormControl(this.nickNameAddFormControl.value)
+      new FormControl(
+        this.nickNameAddFormControl.value,
+        [Validators.required],
+        [NicknameValidator.createValidator(this.validatorService)]
+      )
     );
     this.nickNameAddFormControl.reset();
   }
