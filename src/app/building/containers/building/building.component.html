@@ -1,9 +1,11 @@
-<div>
+<div class="container">
   <app-building-info
-    [address]="'Hello World'"
-    [description]="'This is an Angular Application'"
+    [address]="data.address"
+    [description]="data.description"
   ></app-building-info>
   <br />
   <br />
-  <app-nickname-editor></app-nickname-editor>
+  <div class="nickname-editor">
+    <app-nickname-editor></app-nickname-editor>
+  </div>
 </div>
