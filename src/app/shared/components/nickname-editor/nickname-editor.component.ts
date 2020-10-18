@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -10,6 +11,7 @@ import {
   FormArray,
   FormBuilder,
   FormControl,
+  FormGroup,
   Validators,
 } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
@@ -20,24 +22,43 @@ import { ValidatorService } from '../../services/validator.service';
   selector: 'app-nickname-editor',
   templateUrl: './nickname-editor.component.html',
   styleUrls: ['./nickname-editor.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NicknameEditorComponent implements OnInit, OnDestroy {
-  @Input() set nickNames(nickNames: string) {
-    // this.formArray.push;
+  @Input() set nicknames(nicknnameList: string[]) {
+    if (!nicknnameList) return;
+    (this.nicknameFormList.get('nicknames') as FormArray).clear();
+    nicknnameList.map((nickname) =>
+      (this.nicknameFormList.get('nicknames') as FormArray).push(
+        new FormControl(
+          nickname,
+          [Validators.required],
+          [NicknameValidator.createValidator(this.validatorService)]
+        )
+      )
+    );
   }
+
   @Output() valid = new EventEmitter<boolean>();
   @Output() delete = new EventEmitter<number>();
+  @Output() add = new EventEmitter<string>();
+  @Output() nicknameChange = new EventEmitter<{
+    index: number;
+    nickname: string;
+  }>();
 
   ngDestroy$ = new EventEmitter();
 
-  public nickNameFormList: FormArray;
+  public nicknameFormList: FormGroup;
   public nickNameAddFormControl: FormControl;
 
   constructor(
     private formBuilder: FormBuilder,
     private validatorService: ValidatorService
   ) {
-    this.nickNameFormList = this.formBuilder.array([]);
+    this.nicknameFormList = this.formBuilder.group({
+      nicknames: this.formBuilder.array([]),
+    });
     this.nickNameAddFormControl = this.formBuilder.control(
       '',
       [Validators.required],
@@ -46,30 +67,27 @@ export class NicknameEditorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.nickNameFormList.valueChanges
-      .pipe(takeUntil(this.ngDestroy$))
-      .subscribe(() => {
-        if (!this.nickNameFormList.valid) {
-          this.valid.next(false);
-        }
-        this.valid.next(true);
-      });
+    this.nicknameFormList.valueChanges.subscribe(() => {
+      if (!this.nicknameFormList.valid) {
+        this.valid.next(false);
+        return;
+      }
+      this.valid.next(true);
+    });
   }
 
   onNicknameAdd() {
     if (!this.nickNameAddFormControl.valid) return;
-    this.nickNameFormList.controls.push(
-      new FormControl(
-        this.nickNameAddFormControl.value,
-        [Validators.required],
-        [NicknameValidator.createValidator(this.validatorService)]
-      )
-    );
+    this.add.next(this.nickNameAddFormControl.value);
     this.nickNameAddFormControl.reset();
   }
 
   onNicknameDelete(index: number) {
     this.delete.next(index);
+  }
+
+  onNicknameChange(index: number, nickname: string) {
+    this.nicknameChange.next({ index, nickname });
   }
 
   ngOnDestroy(): void {

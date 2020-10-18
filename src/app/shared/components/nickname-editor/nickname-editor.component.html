@@ -1,45 +1,61 @@
 <div>
-  <form [formGroup]="nickNameFormList">
-    <ng-container *ngIf="nickNameFormList">
-      <mat-form-field
-        *ngFor="let control of nickNameFormList.controls; index as i"
-        class="form-field"
+  <form [formGroup]="nicknameFormList">
+    <mat-form-field
+      *ngFor="
+        let control of nicknameFormList.get('nicknames')['controls'];
+        index as i
+      "
+      class="form-field"
+    >
+      <input
+        [formControl]="control"
+        matInput
+        placeholder="Nickname {{ i + 1 }}"
+      />
+      <button
+        mat-button
+        *ngIf="control.dirty"
+        matSuffix
+        mat-icon-button
+        aria-label="Save"
+        (click)="onNicknameChange(i, control.value)"
       >
-        <input
-          [formControl]="nickNameFormList.controls[i]"
-          matInput
-          placeholder="Nickname {{ i + 1 }}"
-        />
-        <button
-          mat-button
-          *ngIf="nickNameFormList.controls[i].value"
-          matSuffix
-          mat-icon-button
-          aria-label="Clear"
-          (click)="onNicknameDelete(i)"
-        >
-          <mat-icon color="danger">delete</mat-icon>
-        </button>
-        <!-- <mat-error> Please enter a valid email address </mat-error>
-      <mat-error> Email is <strong>required</strong> </mat-error> -->
-      </mat-form-field>
-    </ng-container>
+        <mat-icon color="danger">save</mat-icon>
+      </button>
+      <button
+        mat-button
+        *ngIf="control.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="onNicknameDelete(i)"
+      >
+        <mat-icon color="danger">delete</mat-icon>
+      </button>
+
+      <mat-error *ngIf="control.hasError('nicknameInvalid')">
+        Please enter a valid nickname</mat-error
+      >
+    </mat-form-field>
   </form>
 
-  <mat-form-field class="example-full-width">
-    <mat-label>Enter a nickname</mat-label>
-    <input [formControl]="nickNameAddFormControl" matInput />
-    <!-- <mat-error> Please enter a valid email address </mat-error>
-      <mat-error> Email is <strong>required</strong> </mat-error> -->
-  </mat-form-field>
+  <div class="adder-container">
+    <mat-form-field class="add-field">
+      <mat-label>Enter a nickname</mat-label>
+      <input [formControl]="nickNameAddFormControl" matInput />
 
-  <br />
-  <button
-    (click)="onNicknameAdd()"
-    [disabled]="!nickNameAddFormControl.valid"
-    mat-raised-button
-    color="primary"
-  >
-    Add
-  </button>
+      <mat-error *ngIf="nickNameAddFormControl.hasError('nicknameInvalid')">
+        Please enter a valid nickname</mat-error
+      >
+    </mat-form-field>
+
+    <button
+      (click)="onNicknameAdd()"
+      [disabled]="!nickNameAddFormControl.valid"
+      mat-raised-button
+      color="primary"
+    >
+      Add
+    </button>
+  </div>
 </div>
