@@ -25,6 +25,7 @@ export class NicknameEditorComponent implements OnInit, OnDestroy {
     // this.formArray.push;
   }
   @Output() valid = new EventEmitter<boolean>();
+  @Output() delete = new EventEmitter<number>();
 
   ngDestroy$ = new EventEmitter();
 
@@ -61,7 +62,9 @@ export class NicknameEditorComponent implements OnInit, OnDestroy {
     this.nickNameAddFormControl.reset();
   }
 
-  onNicknameDelete() {}
+  onNicknameDelete(index: number) {
+    this.delete.next(index);
+  }
 
   ngOnDestroy(): void {
     this.ngDestroy$.next();
