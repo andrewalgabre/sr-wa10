@@ -3,13 +3,23 @@
     <ng-container *ngIf="nickNameFormList">
       <mat-form-field
         *ngFor="let control of nickNameFormList.controls; index as i"
-        class="example-full-width"
+        class="form-field"
       >
         <input
           [formControl]="nickNameFormList.controls[i]"
           matInput
           placeholder="Nickname {{ i + 1 }}"
         />
+        <button
+          mat-button
+          *ngIf="nickNameFormList.controls[i].value"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="onNicknameDelete(i)"
+        >
+          <mat-icon color="danger">delete</mat-icon>
+        </button>
         <!-- <mat-error> Please enter a valid email address </mat-error>
       <mat-error> Email is <strong>required</strong> </mat-error> -->
       </mat-form-field>
@@ -17,18 +27,19 @@
   </form>
 
   <mat-form-field class="example-full-width">
-    <mat-label>Enter new nickname</mat-label>
-    <input
-      [formControl]="nickNameAddFormControl"
-      matInput
-      placeholder="Ex. pat@example.com"
-    />
+    <mat-label>Enter a nickname</mat-label>
+    <input [formControl]="nickNameAddFormControl" matInput />
     <!-- <mat-error> Please enter a valid email address </mat-error>
       <mat-error> Email is <strong>required</strong> </mat-error> -->
   </mat-form-field>
 
   <br />
-  <button (click)="onNicknameAdd()" mat-raised-button color="primary">
-    Primary
+  <button
+    (click)="onNicknameAdd()"
+    [disabled]="!nickNameAddFormControl.valid"
+    mat-raised-button
+    color="primary"
+  >
+    Add
   </button>
 </div>
