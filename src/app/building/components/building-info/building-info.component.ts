@@ -12,8 +12,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BuildingInfoComponent implements OnInit {
-  @Input() description: string = '';
-  @Input() address: string = '';
+  @Input() description = '';
+  @Input() address = '';
 
   constructor() {}
 
