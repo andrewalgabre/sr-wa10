@@ -5,7 +5,22 @@
   ></app-building-info>
   <br />
   <br />
-  <div class="nickname-editor">
-    <app-nickname-editor></app-nickname-editor>
+  <div class="nickname-container">
+    <app-nickname-editor
+      [nicknames]="data.nicknames"
+      (delete)="onDelete($event)"
+      (add)="onAdd($event)"
+      (nicknameChange)="onChange($event)"
+      (valid)="onValid($event)"
+    ></app-nickname-editor>
   </div>
+
+  <button
+    (click)="onSave()"
+    [disabled]="!formValid"
+    mat-raised-button
+    color="primary"
+  >
+    Save Nicknames
+  </button>
 </div>
