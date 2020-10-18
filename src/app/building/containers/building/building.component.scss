@@ -1,5 +1,5 @@
 .container {
-  .nickname-editor {
+  .nickname-container {
     padding-left: 30px;
     padding-right: 30px;
   }
@@ -7,9 +7,9 @@
 
 @media screen and (min-width: 1400px) {
   .container {
-    .nickname-editor {
+    .nickname-container {
       padding-left: 500px;
-      padding-right: 500px;
+      padding-right: 300px;
     }
   }
 }
