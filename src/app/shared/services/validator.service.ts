@@ -13,7 +13,7 @@ export class ValidatorService {
    * @returns boolean observable
    */
   public isValidNickname(nickname: string): Observable<boolean> {
-    if (!nickname.startsWith('a')) {
+    if (!nickname.toLowerCase().startsWith('a')) {
       return of(false);
     }
     return of(true);
