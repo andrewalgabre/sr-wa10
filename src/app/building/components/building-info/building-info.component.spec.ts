@@ -8,9 +8,8 @@ describe('BuildingInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BuildingInfoComponent ]
-    })
-    .compileComponents();
+      declarations: [BuildingInfoComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -21,5 +20,17 @@ describe('BuildingInfoComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should not diplay any address and description', () => {
+    expect(component.address).toBe('');
+    expect(component.description).toBe('');
+  });
+
+  it('should diplay address and description', () => {
+    component.address = '30 St Mary Axe, London';
+    component.description = 'Mythenschloss';
+    expect(component.address).toBe('30 St Mary Axe, London');
+    expect(component.description).toBe('Mythenschloss');
   });
 });
