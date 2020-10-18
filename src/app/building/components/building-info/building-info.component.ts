@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-building-info',
   templateUrl: './building-info.component.html',
-  styleUrls: ['./building-info.component.scss']
+  styleUrls: ['./building-info.component.scss'],
 })
 export class BuildingInfoComponent implements OnInit {
+  @Input() description: string = '';
+  @Input() address: string = '';
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
