@@ -6,7 +6,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormControl } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { ValidatorService } from '../../services/validator.service';
 
@@ -31,7 +36,10 @@ export class NicknameEditorComponent implements OnInit, OnDestroy {
     private validatorService: ValidatorService
   ) {
     this.nickNameFormList = this.formBuilder.array([]);
-    this.nickNameAddFormControl = this.formBuilder.control('');
+    this.nickNameAddFormControl = this.formBuilder.control(
+      '',
+      Validators.required
+    );
   }
 
   ngOnInit(): void {
