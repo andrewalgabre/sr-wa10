@@ -18,4 +18,4 @@ Run `ng test`
 - Added Building-Module for Routing and Lazy-Loading
 - Added SharedModule which should contain highly reusable components
 - Added Vendor Folder to centralise 3rd Party Modules
-- Added Core Folder for Utility-Functions(pure functions)/Validators which are highy reusable
+- Added Core Folder for Utility-Functions(pure functions)/Validators which are highly reusable
